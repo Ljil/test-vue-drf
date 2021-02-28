@@ -1,8 +1,8 @@
 <template>
   <div>
     <form @submit.prevent="login">
-      <p><input v-model="username" placeholder="username"></p>
-      <p><input v-model="password" type="password" placeholder="password"></p>
+      <p><label for="login">Логин: </label><input id="login" v-model="username" placeholder="username"></p>
+      <p><label for="password">Пароль: </label><input id="password" v-model="password" type="password" placeholder="password"></p>
       <p v-if="!token">
         <button>Войти</button>
       </p>
@@ -10,8 +10,8 @@
     </form>
     <br>
     <p v-if="token">
-        <button @click="logout()">Выйти</button>
-      </p>
+      <button @click="logout()">Выйти</button>
+    </p>
     <p v-if="token">
       Token: {{ token }}
     </p>
@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: "Home",
+  name: "LoginForm",
   data() {
     return {
       username: '',
@@ -32,12 +32,11 @@ export default {
   },
   methods: {
     login() {
-      const url = "http://localhost:8000/api-token-auth/"
       const data = {
         username: this.username,
         password: this.username,
       }
-      fetch(url, {
+      fetch(this.$store.state.baseUrl + 'api-token-auth/', {
         method: 'POST',
         cache: "no-cache",
         headers: {
@@ -56,10 +55,13 @@ export default {
             localStorage.setItem('token', data.token)
           })
           .catch(error => this.error = error)
+
+      this.$router.push({ path: '/' })
     },
     logout() {
       localStorage.removeItem('token')
       this.token = ''
+      this.$router.push({ path: '/' })
     }
   }
 };
