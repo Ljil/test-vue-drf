@@ -3,7 +3,7 @@
     <div id="nav">
       <router-link to="/">Main</router-link> |
       <router-link to="/login">Login</router-link> |
-      <router-link to="/create">Создать пост</router-link>
+      <router-link v-if="this.$store.state.token" to="/create">Создать пост</router-link>
     </div>
     <router-view/>
   </div>

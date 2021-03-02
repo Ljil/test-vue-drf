@@ -3,19 +3,19 @@
     <form @submit.prevent="login">
       <p><label for="login">Логин: </label><input id="login" v-model="username" placeholder="username"></p>
       <p><label for="password">Пароль: </label><input id="password" v-model="password" type="password" placeholder="password"></p>
-      <p v-if="!token">
+      <p v-if="!this.$store.state.token">
         <button>Войти</button>
       </p>
 
     </form>
     <br>
-    <p v-if="token">
-      <button @click="logout()">Выйти</button>
+    <p v-if="this.$store.state.token">
+      <button @click="logout">Выйти</button>
     </p>
-    <p v-if="token">
-      Token: {{ token }}
+    <p v-if="this.$store.state.token">
+      Token: {{ this.$store.state.token }}
     </p>
-    <p v-if="error && !token">Error: {{ error }}</p>
+    <p v-if="error && !this.$store.state.token">Error: {{ error }}</p>
   </div>
 </template>
 
@@ -26,7 +26,6 @@ export default {
     return {
       username: '',
       password: '',
-      token: localStorage.getItem('token'),
       error: ''
     };
   },
@@ -51,17 +50,15 @@ export default {
             return response.json()
           })
           .then(data => {
-            this.token = data.token
             localStorage.setItem('token', data.token)
+            this.$store.state.token = data.token
           })
           .catch(error => this.error = error)
 
       this.$router.push({ path: '/' })
     },
     logout() {
-      localStorage.removeItem('token')
-      this.token = ''
-      this.$router.push({ path: '/' })
+      this.$store.commit('resetAuthToken')
     }
   }
 };

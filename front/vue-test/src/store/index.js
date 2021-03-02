@@ -5,14 +5,19 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    baseUrl: "http://localhost:8000/"
+    baseUrl: "http://localhost:8000/",
+    token: localStorage.getItem('token')
   },
   getters: {
     getAuthToken() {
       return localStorage.getItem('token')
     }
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    resetAuthToken(state) {
+      state.token = ''
+      localStorage.removeItem('token')
+    }
+  },
   modules: {}
 });

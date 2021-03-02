@@ -1,16 +1,17 @@
 <template>
-  <div>
+  <div v-if="this.$store.state.token">
     <h1>Создание нового поста</h1>
     <p>
       <label for="post_title">Заголовок</label>
-      <input id="post_title" v-model="title" placeholder="Заголовок">
+      <input id="post_title" v-model="title" placeholder="Заголовок"/>
     </p>
     <p>
       <label for="post_text">Текст</label>
-      <input id="post_text" v-model="text" placeholder="Текст">
+      <input id="post_text" v-model="text" placeholder="Текст"/>
     </p>
     <button @click="create">Создать</button>
   </div>
+  <div v-else>Нужно авторизоваться</div>
 </template>
 
 <script>
@@ -18,8 +19,8 @@ export default {
   name: "PostCreate",
   data() {
     return {
-      title: '',
-      text: ''
+      title: "",
+      text: ""
     }
   },
   methods: {
@@ -51,5 +52,5 @@ export default {
           .catch(error => alert(error))
     }
   }
-}
+};
 </script>
