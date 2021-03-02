@@ -9,9 +9,9 @@
 
     </form>
     <br>
-    <p v-if="this.$store.state.token">
-      <button @click="logout">Выйти</button>
-    </p>
+<!--    <p v-if="this.$store.state.token">-->
+<!--      <button @click="logout">Выйти</button>-->
+<!--    </p>-->
     <p v-if="this.$store.state.token">
       Token: {{ this.$store.state.token }}
     </p>
@@ -57,9 +57,6 @@ export default {
 
       this.$router.push({ path: '/' })
     },
-    logout() {
-      this.$store.commit('resetAuthToken')
-    }
   }
 };
 </script>
